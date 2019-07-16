@@ -9,7 +9,7 @@ import (
 
 var (
         pin = rpio.Pin(17)
-	xpin = rpio.Pin(22)
+	xpin = rpio.Pin(27)
 )
 
 func main() {
@@ -25,15 +25,16 @@ func main() {
         // Set pin to output mode
         pin.Output()
 	xpin.Input()
-
+	xpin.PullUp()
+	xpin.Detect(rpio.FallEdge)
 
         // Toggle - infinite loop
-	for xpin.High(){
+	for  {
+		if xpin.EdgeDetected(){
                 pin.Toggle()
-                time.Sleep(500*time.Millisecond)
+		time.Sleep(500*time.Millisecond)
 	}
-	for xpin.Low() {
-		pin.Low()
 	}
+
 
 }
